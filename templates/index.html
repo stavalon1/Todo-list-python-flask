@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+</head>
+<body>
+    <h1>Todo List App</h1>
+    <ul>
+        {% for todo in todos %}
+        <li>
+            <input type="checkbox" style="background-color:black;color:white;width:100px;height:20px;" name="done" {% if todo['done'] %}checked{% endif %} onchange="this.form.submit()">
+            <span {%if todo['done'] %} style="text-decoration: line-through" {%endif%}>{{ todo['task'] }} </span>
+            <a href="{{ url_for('check', index=loop.index0) }}">Check todo</a>
+            <a href="{{ url_for('edit', index=loop.index0) }}">Edit todo</a>
+            <a href="{{ url_for('delete', index=loop.index0) }}">Delete todo</a>
+            <p>Date you chosen: {{ todo['date'] }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <form action="{{ url_for('add') }}" method="post">
+        <h4>Please add a task</h4>
+        <input type="text" name="todo">
+
+        <h4>Please pick a date</h4>
+        <input type="date" name="dateoftask"><br><br><br>
+
+        <button type="submit" style="background-color:blue;color:white;width:150px;height:40px;border-radius:10px;">Add todo</button>
+    </form>
+
+</body>
+</html>
